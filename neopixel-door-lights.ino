@@ -7,64 +7,64 @@
   #include <avr/power.h>
 #endif
 
-const byte leftDoorLEDStripPin = 8;   // connected to NeoPixels.
-const byte leftDoorSwitchPin = 12;    // connected to left door switch.
-Button leftDoorButton(leftDoorSwitchPin, true, true, 50);
-NeoPatterns leftDoorLEDs = NeoPatterns(30, leftDoorLEDStripPin, NEO_RGB + NEO_KHZ800, &leftDoorLEDsComplete);
+const byte leftLEDStripPin = 4;   // connected to left LED strip.
+const byte leftSwitchPin = 6;    // connected to left door switch.
+Button leftButton(leftSwitchPin, true, true, 50);
+NeoPatterns leftLEDs = NeoPatterns(30, leftLEDStripPin, NEO_RGB + NEO_KHZ800, &leftLEDsComplete);
 
-const byte rightDoorLEDStripPin = 9;   // connected to NeoPixels.
-const byte rightDoorSwitchPin = 11;    // connected to right door switch.
-Button rightDoorButton(rightDoorSwitchPin, true, true, 50);
-NeoPatterns rightDoorLEDs = NeoPatterns(30, rightDoorLEDStripPin, NEO_RGB + NEO_KHZ800, &rightDoorLEDsComplete);
+const byte rightLEDStripPin = 8; //10;   // connected to right LED strip.
+const byte rightSwitchPin = 12;    // connected to right door switch.
+Button rightButton(rightSwitchPin, true, true, 50);
+NeoPatterns rightLEDs = NeoPatterns(30, rightLEDStripPin, NEO_RGB + NEO_KHZ800, &rightLEDsComplete);
 
-uint32_t offColor = rightDoorLEDs.Color(0,0,0);
-uint32_t onColor = rightDoorLEDs.Color(255, 248, 248);
+uint32_t offColor = rightLEDs.Color(0,0,0);
+uint32_t onColor = rightLEDs.Color(255, 248, 248);
 
 void setup() {
   Serial.begin(9600);
-  pinMode(leftDoorLEDStripPin, OUTPUT);
-  pinMode(rightDoorLEDStripPin, OUTPUT);
-  leftDoorLEDs.begin();
-  leftDoorLEDs.ColorSet(offColor);
-  leftDoorLEDs.show();
-  rightDoorLEDs.begin();
-  rightDoorLEDs.ColorSet(offColor);
-  rightDoorLEDs.show();
+  pinMode(leftLEDStripPin, OUTPUT);
+  pinMode(rightLEDStripPin, OUTPUT);
+  leftLEDs.begin();
+  leftLEDs.ColorSet(offColor);
+  leftLEDs.show();
+  rightLEDs.begin();
+  rightLEDs.ColorSet(offColor);
+  rightLEDs.show();
 }
 
 void loop() {
 
-    leftDoorButton.read();
-    if (leftDoorButton.wasReleased()) {   // Door has opened, turn up light
-      leftDoorLEDs.Fade(leftDoorLEDs.getPixelColor(0), onColor, 10, 25, FORWARD);
+    leftButton.read();
+    if (leftButton.wasReleased()) {   // door has opened, turn up light
+      leftLEDs.Fade(leftLEDs.getPixelColor(0), onColor, 10, 25, FORWARD);
     }
-    if (leftDoorButton.wasPressed()) {   // Door has closed, turn off light
-      leftDoorLEDs.Fade(leftDoorLEDs.getPixelColor(0), offColor, 10, 15, FORWARD);
+    if (leftButton.wasPressed()) {   // door has closed, turn off light
+      leftLEDs.Fade(leftLEDs.getPixelColor(0), offColor, 10, 15, FORWARD);
     }
-    leftDoorLEDs.Update();
+    leftLEDs.Update();
 
-    rightDoorButton.read();
-    if (rightDoorButton.wasReleased()) {   // Door has opened, turn up light
-      rightDoorLEDs.Fade(rightDoorLEDs.getPixelColor(0), onColor, 10, 25, FORWARD);
+    rightButton.read();
+    if (rightButton.wasReleased()) {   // door has opened, turn up light
+      rightLEDs.Fade(rightLEDs.getPixelColor(0), onColor, 10, 25, FORWARD);
     }
-    if (rightDoorButton.wasPressed()) {   // Door has closed, turn off light
-      rightDoorLEDs.Fade(rightDoorLEDs.getPixelColor(0), offColor, 10, 15, FORWARD);
+    if (rightButton.wasPressed()) {   // door has closed, turn off light
+      rightLEDs.Fade(rightLEDs.getPixelColor(0), offColor, 10, 15, FORWARD);
     }
-    rightDoorLEDs.Update();
+    rightLEDs.Update();
 }
 
-void leftDoorLEDsComplete() {
-  leftDoorLEDs.ActivePattern = NONE;
-  leftDoorButton.read();
-  if (leftDoorButton.isPressed()) {
-    leftDoorLEDs.ColorSet(offColor);
+void leftLEDsComplete() {
+  leftLEDs.ActivePattern = NONE;
+  leftButton.read();
+  if (leftButton.isPressed()) {
+    leftLEDs.ColorSet(offColor);
   }
 }
 
-void rightDoorLEDsComplete() {
-  rightDoorLEDs.ActivePattern = NONE;
-  rightDoorButton.read();
-  if (rightDoorButton.isPressed()) {
-    rightDoorLEDs.ColorSet(offColor);
+void rightLEDsComplete() {
+  rightLEDs.ActivePattern = NONE;
+  rightButton.read();
+  if (rightButton.isPressed()) {
+    rightLEDs.ColorSet(offColor);
   }
 }
