@@ -10,15 +10,15 @@
 const byte leftLEDStripPin = 4;   // connected to left LED strip.
 const byte leftSwitchPin = 6;    // connected to left door switch.
 Button leftButton(leftSwitchPin, true, true, 50);
-NeoPatterns leftLEDs = NeoPatterns(30, leftLEDStripPin, NEO_RGB + NEO_KHZ800, &leftLEDsComplete);
+NeoPatterns leftLEDs = NeoPatterns(50, leftLEDStripPin, NEO_RGB + NEO_KHZ800, &leftLEDsComplete);
 
-const byte rightLEDStripPin = 8; //10;   // connected to right LED strip.
+const byte rightLEDStripPin =  10;   // connected to right LED strip.
 const byte rightSwitchPin = 12;    // connected to right door switch.
 Button rightButton(rightSwitchPin, true, true, 50);
-NeoPatterns rightLEDs = NeoPatterns(30, rightLEDStripPin, NEO_RGB + NEO_KHZ800, &rightLEDsComplete);
+NeoPatterns rightLEDs = NeoPatterns(75, rightLEDStripPin, NEO_RGB + NEO_KHZ800, &rightLEDsComplete);
 
 uint32_t offColor = rightLEDs.Color(0,0,0);
-uint32_t onColor = rightLEDs.Color(255, 248, 248);
+uint32_t onColor = rightLEDs.Color(255, 248, 185);
 
 void setup() {
   Serial.begin(9600);
